@@ -1,0 +1,101 @@
+<!--========================================================================;
+ *
+ *  This file is part of the FIRST open-source software. 
+ *  See http://project-first.eu/
+ *
+ *  File:    Default.html
+ *  Desc:    Pump & dump demo entry page
+ *  Created: Oct-2012
+ *
+ *  Author:  Miha Grcar
+ *
+ *************************************************************************-->
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>Pump & Dump Demo</title>
+    <link href="Common/Css/First.css" rel="stylesheet" type="text/css" />   
+    <script type="text/javascript" src="Common/Js/First.js"></script> 
+    <script type="text/javascript">
+        
+        var ajaxRunning 
+            = false;
+
+        function ajaxResponse(status, response) {
+            if (status != 200) {
+                document.getElementById("message").innerHTML = "Oops, something went wrong.";
+            } else {
+                var r = eval("(" + response + ")");
+                document.getElementById("message").innerHTML = (r.p == 1 ? "This text is trustworthy." : "<span style='color: red;'>This text is suspicious.</span>")
+                + "<br><br>Trustworthy words:<br>" + r.wpos + "<br><br>Suspicious words:<br>" + r.wneg;
+            }
+            ajaxRunning = false;
+        }
+
+        function ajaxRequest() {
+            if (!ajaxRunning) {                
+                var text = document.getElementById("text").value;
+                if (text == "") {
+                    alert("Please enter some text first.");
+                    return;
+                }
+                var url = "PumpAndDumpDemo.aspx?text=" + escape(text);
+                var msgDiv = document.getElementById("message");
+                msgDiv.innerHTML = "<img src='Common/Img/Loading.gif' />";
+                msgDiv.style.display = "";
+                ajaxRunning = true;
+                first.processAjax(url, ajaxResponse);
+            }
+        }
+
+        function setPumpNDumpText() {
+            document.getElementById("text").value = "News Alert for Wednesday 12-15-10: HIRU Headlines: Hiru Corp (HIRU) to Participate In China Government RD Veterinary Surveillance Company representatives from Hiru Corporations (www.hirucorporation.com) subsidiary Shuangshi AHP Co. are engaged in discussions with China based provincially-ranked directors of veterinary surveillance in Nanchang. Read the full article: There are 3 more important parts to this news: HIRU also expects that this invitation and the subsequent RD will gain stronger exposure for Shuangshi AHP and its manufacturing and research expertise with the local governments for the future cooperation. Shuangshi AHP plans to continue to participate in additional such venues and increase the awareness of the company with the governments and farmers. HIRUs recent tour of Ganzhou, Yichun and Jian to evaluate agricultural developments and conduct market surveys to determine which of Shuangshis cutting edge animal feed additives and vaccines are most needed in these markets. Keep this on your watch list, it has rallied big in the past and it could do it again!";
+        }
+
+        function setCredibleText() {
+            document.getElementById("text").value = "Banking On Blue Chip Stocks Amy Fontinelle Blue chip stocks, named after the highest-valued chips in poker, are prized investment holdings representing ownership in some the most successful firms in the economy. If you want to invest in companies that have proven their ability to ride out economic downturns and maintain profitability even when times get tough, you should take a look at these stocks. A blue chip stock is a share of ownership in a large, well-established and stable company that has a long history of consistent earnings growth and dividend payments. Blue chip companies have a large market capitalization, strong balance sheets and good cash flow. Blue chip stocks have low volatility overall, but strong changes in the overall market can also have strong effects on these stocks. The performance of an individual blue chip company will tend to correlate closely with the performance of the S&P 500. Many blue chip stocks are household names, such as American Express, Boeing, Coca Cola and Disney. However, a company doesn't have to be a household name to be a blue chip.";
+        }
+
+    </script>
+</head>
+
+<body>
+    <div id="wrap">
+    <div id="main">        
+        <center>
+        <div class="header"><a href="">&lt;&lt; Home</a></div>
+        <div style="width: 800px;">        
+            <h1>Pump & Dump Demo</h1>
+            <br />
+            <br />
+            Enter text (examples: <a href="javascript: setPumpNDumpText();">suspicious</a> | 
+                <a href="javascript: setCredibleText();">trustworthy</a>):<br />
+            <br />
+            <div class="inputContainer" style="width: 590px; height: 100%;">        
+                <textarea id="text" cols="28" rows="21" style="width: 588px; height: 300px;"></textarea>
+            </div>
+            <br />
+            <div class="button" style="width: 8em;" onclick="ajaxRequest();"><div class="button_leftBorder"><div class="button_rightBorder">Classify</div></div></div>
+            <br />            
+            <div style="display: none; width: 590px; text-align: center;" id="message"></div>
+        </div>
+        </center>
+    </div>
+    </div>
+    <div id="footer">
+        <center>
+        <div style="width: 800px;">
+            <div style="float: left; height: 100px; line-height: 80px;"><a href="http://project-first.eu"><img style="vertical-align: middle;" src="Common/Img/FIRSTLogoSmall.gif" alt="FIRST Logo" /></a></div>
+            <div style="float: right; height: 100px; line-height: 80px;"><a href="http://cordis.europa.eu/info-management/"><img style="vertical-align: middle;" src="Common/Img/EULogoSmall.gif" alt="EU Logo" /></a></div>
+            <a href="http://www.ijs.si"><img src="Common/Img/JSILogoSmall.gif" alt="JSI Logo" /></a><br />
+            <span class="copyright">&copy; 2012 <a href="http://kt.ijs.si">Department of Knowledge Technologies</a>. Co-funded by the <a href="http://cordis.europa.eu/info-management/">European Union</a>.</span>
+        </div>
+        </center>
+    </div>
+</body>
+
+</html>
